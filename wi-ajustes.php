@@ -30,7 +30,7 @@ class Wi_Ajustes
      */
     public function __construct()
     {
-        define( 'WI_VERSION', '1.10.1' );
+        define( 'WI_VERSION', '1.0.0' );
         define( 'WI_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/templates/' );
         define( 'WI_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
         define( 'WI_MAIN_FILE', __FILE__ );
@@ -110,10 +110,10 @@ class Wi_Ajustes
    */
   public function add_scripts_and_styles()
   {
-    wp_register_style( 'wiAjustesStyles', MKT_PLUGIN_URL .  'style.css', null, WI_VERSION );
+    wp_register_style( 'wiAjustesStyles', WI_PLUGIN_URL .  'style.css', null, WI_VERSION );
     wp_enqueue_style( 'wiAjustesStyles' );
 
-    wp_enqueue_script('wiAjustesStylesJs', MKT_PLUGIN_URL . 'script.js' , array('jquery'));
+    wp_enqueue_script('wiAjustesStylesJs', WI_PLUGIN_URL . 'script.js' , array('jquery'));
   }
 }
 
