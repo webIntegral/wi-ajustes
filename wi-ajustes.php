@@ -110,10 +110,10 @@ class Wi_Ajustes
    */
   public function add_scripts_and_styles()
   {
-    wp_register_style( 'wiAjustesStyles', WI_PLUGIN_URL .  'style.css', null, WI_VERSION );
+    wp_register_style( 'wiAjustesStyles', WI_PLUGIN_URL .  'styles.css', null, WI_VERSION );
     wp_enqueue_style( 'wiAjustesStyles' );
 
-    wp_enqueue_script('wiAjustesStylesJs', WI_PLUGIN_URL . 'script.js' , array('jquery'));
+    wp_enqueue_script('wiAjustesStylesJs', WI_PLUGIN_URL . 'scripts.js' , array('jquery'));
   }
 }
 
