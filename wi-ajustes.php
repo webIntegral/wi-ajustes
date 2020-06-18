@@ -36,6 +36,7 @@ class Wi_Ajustes
         define( 'WI_MAIN_FILE', __FILE__ );
         define( 'WI_ABSPATH', dirname( __FILE__ ) . '/' );
         
+        add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_and_styles' ), 999 );
         add_action( 'plugins_loaded', array( $this, 'includes' ) );
         add_action( 'plugins_loaded', array( $this, 'init' ) );
         
@@ -106,14 +107,14 @@ class Wi_Ajustes
     }
 
   /**
-   * Cargar archivo assets/css/styles.css
+   * Cargar archivo styles.css con los estilos y scripts.js con los scripts
    */
   public function add_scripts_and_styles()
   {
-    wp_register_style( 'wiAjustesStyles', WI_PLUGIN_URL .  'styles.css', null, WI_VERSION );
+    wp_register_style( 'wiAjustesStyles', WI_PLUGIN_URL .  '/style.css', null, WI_VERSION );
     wp_enqueue_style( 'wiAjustesStyles' );
 
-    wp_enqueue_script('wiAjustesStylesJs', WI_PLUGIN_URL . 'scripts.js' , array('jquery'));
+    wp_enqueue_script('wiAjustesStylesJs', WI_PLUGIN_URL . '/script.js' , array('jquery'));
   }
 }
 
