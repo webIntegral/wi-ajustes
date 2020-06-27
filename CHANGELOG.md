@@ -4,6 +4,7 @@
 
 ### Adiciones
 * Agregar carpeta templates.
+* Agregar contenido al README.md.
 
 ### Cambios
 * Comentar los archivos para hacerlos más claros.
