@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Wi Ajustes
  * Description: Plugin en blanco para hacer ajustes en Wordpress y WooCommerce.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Mario <mario@webintegral.com.co>
  * Plugin URI: https://webintegral.com.co/blog/como-crear-un-plugin-propio-para-hacer-todos-los-ajustes-de-wordpress-y-woocommercer/
  *
@@ -15,12 +15,12 @@
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-    exit;
-}
+/** Evitar que se acceda directamente a la clase */
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
- * Wi Inventario Class
+ * Clase Wi Ajustes
+ * Esta es la clase principal del plugin que se encarga de incializar el plugin.
  */
 class Wi_Ajustes
 {
@@ -30,12 +30,16 @@ class Wi_Ajustes
      */
     public function __construct()
     {
-        define( 'WI_VERSION', '1.0.0' );
+        // Verisión del plugin
+        define( 'WI_VERSION', '1.0.1' );
+
+        // Definición de rutas (paths) para facilitar el acceso a los archivos del plugin
         define( 'WI_TEMPLATE_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . '/templates/' );
         define( 'WI_PLUGIN_URL', untrailingslashit( plugins_url( basename( plugin_dir_path( __FILE__ ) ), basename( __FILE__ ) ) ) );
         define( 'WI_MAIN_FILE', __FILE__ );
         define( 'WI_ABSPATH', dirname( __FILE__ ) . '/' );
         
+        // "Pegarse" de los Hooks de Wordpress
         add_action( 'wp_enqueue_scripts', array( $this, 'add_scripts_and_styles' ), 999 );
         add_action( 'plugins_loaded', array( $this, 'includes' ) );
         add_action( 'plugins_loaded', array( $this, 'init' ) );
@@ -46,16 +50,16 @@ class Wi_Ajustes
     }
     
     /**
-     * Cargar includes
+     * Cargar los archivos con las funcionalidades que se definan.
      */
     public function includes()
     {
         // Incluir functions.php
-        include_once( WI_ABSPATH . 'fuctions.php' );
+        include_once( WI_ABSPATH . 'functions.php' );
     }
     
     /**
-     * Init self
+     * Inicializar (cargar los archivos asociados a los templates o 'plantillas').
      */
     public function init()
     {
@@ -64,17 +68,22 @@ class Wi_Ajustes
         add_filter( 'wc_get_template', array( $this, 'get_template' ), 11, 5 );
     }
     
+    /**
+     * Admin
+     * Cargar los archivos que tienen las funcionalides que deben correr solo en el Admin.
+     */
     public function admin_includes()
     {
 
     }
 
     /**
-     * Forzar a que la plataforma busque los templates primero en este plugin
+     * Cargar los templates.
+     * Esto obliga a la plataforma a que busque los templates primero en este plugin
      * Este método funciona para los templates de nivel superior (single.php, page.php, etc).
-     * No funciona para template parts.
+     * No funciona para "template parts".
      *
-     * Relevant trac ticket; https://core.trac.wordpress.org/ticket/13239
+     * En caso de problemas, revisar este 'trac ticket': https://core.trac.wordpress.org/ticket/13239
      *
      * @param  string $template template string.
      * @return string $template new template string.
@@ -90,7 +99,7 @@ class Wi_Ajustes
      * Forzar WooCommerce para que busque sus templates primero en este plugin.
      * 
      * Por ejemplo, si se quiere modificar el template woocommerce/templates/cart/cart.php,
-     * agregar el nuevo template en <plugindir>/templates/woocommerce/cart/cart.php
+     * agregar el nuevo template en wi_ajustes/templates/woocommerce/cart/cart.php
      *
      * @param string $located is the currently located template, if any was found so far.
      * @param string $template_name is the name of the template (ex: cart/cart.php).
@@ -111,11 +120,14 @@ class Wi_Ajustes
    */
   public function add_scripts_and_styles()
   {
+    // Estilos css 
     wp_register_style( 'wiAjustesStyles', WI_PLUGIN_URL .  '/style.css', null, WI_VERSION );
     wp_enqueue_style( 'wiAjustesStyles' );
 
+    // Scripts de javascript
     wp_enqueue_script('wiAjustesStylesJs', WI_PLUGIN_URL . '/script.js' , array('jquery'));
   }
 }
 
+// Inicializar la clase principal (arrancar el plugin)
 $GLOBALS['wi_ajustes'] = new Wi_Ajustes();
